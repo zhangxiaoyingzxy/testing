@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="站长,网页特效,js特效,广告代码,zzjs,zzjs.net,sky,www.zzjs.net,站长特效 网" />
+<meta name="description" content="www.zzjs.net,站长特效网，站长必备js特效及广告代码。大量高质量js特效，提供高质量广告代码下载,尽在站长特效网" />
+<title>文字向上滚动，sky整理收集，站长特效欢迎您</title>
+<style type="text/css">
+<!--
+body {
+ margin: 0px;
+ font-size: 12px;
+ color: #938C43;
+ line-height: 150%;
+ text-align:center;
+}
+a:link{color: #9D943A;font-size:12px;}
+a:hover{color: #FF3300;font-size:12px;}
+a:visited{color: #9D943A;font-size:12px;}
+a.red:link{color: #ff0000;font-size:12px;}
+a.red:hover{color: #ff0000;font-size:12px;}
+a.red:visited{color: #ff0000;font-size:12px;}
+#marqueeBox{background:#f7f7f7;border:1px solid silver;padding:1px;text-align:center;margin:0 auto;}
+-->
+</style>
+</head>
+<body>
+<!--欢迎来到站长特效网，我们网站收集大量高质量js特效，提供许多广告代码下载，网址：www.zzjs.net，zzjs@msn.com,用.net打造靓站-->
+<h4>滚动新闻</h4>
+<div class="marqueeContainer"></div>
+<script src="http://s0.qhimg.com/lib/jquery/172.js"></script>
+<script language="JavaScript" type="text/javascript">
+    function Marquee () {
+        this._init.apply(this, arguments);
+    };
+
+    $.extend(Marquee.prototype, {
+        '_init': function (options) {
+            options = options || {};
+            this.marqueeId = options.marqueeId || 0;
+            this.marqueeDelay = options.marqueeDelay || 2000;
+            this.marqueeHeight = options.marqueeHeight || 20;
+            this.marqueeContent = options.marqueeContent || [];
+            this.marqueeContainer = $(options.marqueeContainer || '.marqueeContainer');
+            this.marqueeInterval = new Array();
+            this.initMarquee(this.marqueeContent[0]);
+            this.bindEvents();
+        },
+        'initMarquee': function (str) {
+        	this.marqueeContainer.html('<div id="marqueeBox" style="overflow:hidden;float: left;height:'+this.marqueeHeight+'px"><div>'+str+'</div></div>');
+		 	this.marqueeId++;
+		 	this.marqueeInterval[0]=setTimeout(this.startMarquee.bind(this),3000);
+        },
+        'startMarquee' : function() {
+        	clearTimeout(this.marqueeInterval[0]);
+        	var str=this.marqueeContent[this.marqueeId];
+			this.marqueeId++;
+			if(this.marqueeId>=this.marqueeContent.length) this.marqueeId=0;
+			var marqueeBox = $('#marqueeBox');
+			if(marqueeBox.children().length==1) {
+			 	marqueeBox.append('<div>'+str+'</div>');
+			}
+			else {
+				marqueeBox.children().eq(0).html(str);
+			  	marqueeBox.append(marqueeBox.children().eq(0));
+			  	marqueeBox[0].scrollTop=0;
+			}
+			this.marqueeInterval[0]=setTimeout(this.startMarquee.bind(this),3000);
+			clearInterval(this.marqueeInterval[1]);
+			this.marqueeInterval[1]=setInterval(this.scrollMarquee.bind(this),20);
+        },
+        'scrollMarquee': function() {
+        	var marqueeHeight = this.marqueeHeight;
+        	var marqueeBox = $('#marqueeBox');
+        	marqueeBox[0].scrollTop++;
+			if(marqueeBox[0].scrollTop%marqueeHeight==(marqueeHeight-1)){
+				clearInterval(this.marqueeInterval[1]);
+	        }
+	    },
+	    'bindEvents': function() {
+	    	var doc = $(document);
+
+	    	var me = this;
+		    doc.on('mouseover','.getCode,#marqueeBox',function() {
+				clearTimeout(me.marqueeInterval[0]);
+			});
+			doc.on('mouseout','.getCode,#marqueeBox',function() {
+				me.marqueeInterval[0]=setTimeout(me.startMarquee.bind(me),3000);
+			});
+	    }
+    });
+	var Marquee = new Marquee();
+	Marquee._init({
+		'marqueeId': 0,
+		'marqueeDelay' : 2000,
+		'marqueeHeight' : 20,
+		'marqueeContent' : ['<a href=http://www.zzjs.net target=_blank>站长特效网一号滚动</a>','<a href=http://zzjs.net/ target=_blank>站长特效网二号滚动</a>','<a href=http://zzjs.net/ target=_blank>站长特效网三号滚动</a>','<a href=http://zzjs.net/ target=_blank>站长特效网四号滚动</a>']
+	});
+</script>
+</body>
+</html>
